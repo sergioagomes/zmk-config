@@ -9,10 +9,29 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
+    combos {
+        compatible = "zmk,combos";
+
+        cb_minus {
+            bindings = <&kp MINUS>;
+            key-positions = <6 7>;
+        };
+
+        cb_paren {
+            bindings = <&kp LPAR>;
+            key-positions = <18 19>;
+        };
+
+        cb_braket {
+            bindings = <&kp LEFT_BRACE>;
+            key-positions = <30 31>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
+        baseLayer {
             // -----------------------------------------------------------------------------------------
             // |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BSPC |
             // | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
@@ -22,12 +41,12 @@
             bindings = <
 &kp TAB         &kp Q  &kp W  &kp E     &kp R  &kp T        &kp Y      &kp U       &kp I      &kp O    &kp P     &kp BSPC
 &kp LEFT_SHIFT  &kp A  &kp S  &kp D     &kp F  &kp G        &kp H      &kp J       &kp K      &kp L    &kp SEMI  &kp SQT
-&kp LCTRL       &kp Z  &kp X  &kp C     &kp V  &kp B        &kp N      &kp M       &kp COMMA  &kp DOT  &kp FSLH  &kp CLCK
+&kp LCTRL       &kp Z  &kp X  &kp C     &kp V  &kp B        &kp N      &kp M       &kp COMMA  &kp DOT  &kp FSLH  &kp GRAVE
                               &kp LGUI  &to 1  &kp ENTER    &kp SPACE  &kp ESCAPE  &to 2
             >;
         };
 
-        lower_layer {
+        navLayer {
             // -----------------------------------------------------------------------------------------
             // |  TAB |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BSPC |
             // | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT | DWN |  UP | RGT |     |      |
@@ -35,10 +54,10 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&kp TAB    &kp N1  &kp N2  &kp N3    &kp N4    &kp N5       &kp N6    &kp N7    &kp N8    &kp N9     &kp N0   &kp BSPC
-&trans     &trans  &trans  &trans    &kp HOME  &kp END      &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT  &kp F11  &kp F12
-&kp LSHFT  &trans  &trans  &trans    &trans    &kp LBKT     &kp PIPE  &trans    &trans    &trans     &trans   &trans
-                           &kp LGUI  &to 0     &kp SPACE    &kp RET   &to 2     &kp RALT
+&kp TAB      &kp N1          &kp N2           &kp N3     &kp N4              &kp N5              &kp N6     &kp N7     &kp N8         &kp N9     &kp N0      &kp BSPC
+&kp LC(TAB)  &kp LC(D)       &kp PRINTSCREEN  &kp F10    &kp F11             &kp F12             &kp LEFT   &kp DOWN   &kp UP         &kp RIGHT  &kp LC(F6)  &kp LS(LC(F6))
+&kp LSHFT    &kp LC(LS(F6))  &kp LC(C)        &kp LC(V)  &kp LA(DOWN_ARROW)  &kp LA(UP_ARROW)    &kp HOME   &kp PG_UP  &kp PAGE_DOWN  &kp END    &trans      &trans
+                                              &kp LGUI   &to 0               &kp ENTER           &kp SPACE  &to 2      &kp RALT
             >;
         };
 
@@ -50,10 +69,19 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&kp TAB    &kp EXCL  &kp AT          &kp HASH  &kp DLLR  &kp PRCNT    &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR  &kp RPAR  &kp BSPC
-&kp LCTRL  &trans    &bt BT_CLR_ALL  &trans    &trans    &trans       &kp MINUS  &kp EQUAL  &kp LBKT   &kp RBKT  &kp BSLH  &kp GRAVE
-&kp LSHFT  &trans    &trans          &trans    &trans    &trans       &kp UNDER  &kp PLUS   &kp LBRC   &kp RBRC  &kp PIPE  &kp TILDE
-                                     &kp LGUI  &to 0     &kp SPACE    &kp RET    &to 1      &kp RALT
+&kp TAB    &kp EXCL  &kp AT          &kp HASH      &kp DLLR      &kp PRCNT       &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR  &kp RPAR  &kp BSPC
+&kp LCTRL  &trans    &bt BT_CLR_ALL  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2    &kp MINUS  &kp EQUAL  &kp LBKT   &kp RBKT  &kp BSLH  &kp GRAVE
+&kp LSHFT  &trans    &trans          &trans        &trans        &trans          &kp UNDER  &kp PLUS   &kp LBRC   &kp RBRC  &kp PIPE  &kp TILDE
+                                     &kp LGUI      &to 0         &kp ENTER       &kp SPACE  &to 1      &kp RALT
+            >;
+        };
+
+        layer_3 {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans    &trans  &trans  &trans
             >;
         };
     };
